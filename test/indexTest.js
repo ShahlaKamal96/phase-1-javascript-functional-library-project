@@ -1,4 +1,4 @@
-require ( './helpers.js' );
+require('./helpers.js');
 
 const chai = require('chai')
 const spies = require('chai-spies-next')
@@ -7,7 +7,7 @@ const expect = chai.expect
 
 describe('index.js', function () {
   const unmodifiedTestArr = [1, 2, 3, 4]
-  const unmodifiedTestObj = {one: 1, two: 2, three: 3, four: 4}
+  const unmodifiedTestObj = { one: 1, two: 2, three: 3, four: 4 }
 
 
   describe('myEach', function () {
@@ -92,15 +92,15 @@ describe('index.js', function () {
 
   })
 
-  describe('myFind', function() {
+  describe('myFind', function () {
     function findCBGenerator(target) {
-      return (function(currEl) { return target === currEl })
+      return (function (currEl) { return target === currEl })
     }
 
     const intArr = [-1, 4, 0, 1, 3, 2, 3, 4, 5, 6]
     const strArr = ["maru", "choux", "doge", "coco", "waychillgoldeneye", "trance"]
-    const objB = {b: 'b'}
-    const objArr = [{a: 'a'}, objB]
+    const objB = { b: 'b' }
+    const objArr = [{ a: 'a' }, objB]
 
     it('returns the value if found', function () {
       expect(myFind(intArr, findCBGenerator(4))).to.equal(4)
@@ -117,14 +117,14 @@ describe('index.js', function () {
     it('returns undefined if the value is not present', function () {
       expect(myFind(intArr, findCBGenerator(7))).to.equal(undefined)
       expect(myFind(strArr, findCBGenerator("maxwellisbestmax"))).to.equal(undefined)
-      expect(myFind(objArr, findCBGenerator({c: 'c'}))).to.equal(undefined)
+      expect(myFind(objArr, findCBGenerator({ c: 'c' }))).to.equal(undefined)
     })
 
   })
 
   describe('myFilter', function () {
     const testArr = [6, 11, 5, 12, 17, 100, 9, 1, -8]
-    const testObj = { two: 2, three: 3, five: 5, seven: 7}
+    const testObj = { two: 2, three: 3, five: 5, seven: 7 }
 
     function excluder(currEl) {
       return (currEl > 10)
@@ -275,3 +275,40 @@ function arraysEqual(arrA, arrB) {
 function objectsEqual(objA, objB) {
   return (JSON.stringify(objA) === JSON.stringify(objB))
 }
+
+function myFirst(collection, n) {
+  if (n === undefined) {
+    if (Array.isArray(collection)) {
+      return collection[0];
+    } else {
+      const keys = Object.keys(collection);
+      return collection[keys[0]];
+    }
+  } else {
+    if (Array.isArray(collection)) {
+      return collection.slice(0, n);
+    } else {
+      const keys = Object.keys(collection);
+      return keys.slice(0, n).map(key => collection[key]);
+    }
+  }
+}
+
+function myLast(collection, n) {
+  if (n === undefined) {
+    if (Array.isArray(collection)) {
+      return collection[collection.length - 1];
+    } else {
+      const keys = Object.keys(collection);
+      return collection[keys[keys.length - 1]];
+    }
+  } else {
+    if (Array.isArray(collection)) {
+      return collection.slice(-n);
+    } else {
+      const keys = Object.keys(collection);
+      return keys.slice(-n).map(key => collection[key]);
+    }
+  }
+}
+
